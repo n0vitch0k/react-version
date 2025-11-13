@@ -1,0 +1,20 @@
+CREATE TABLE offres_emploi (
+    id SERIAL PRIMARY KEY,
+    titre VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    lieu VARCHAR(100) NOT NULL,
+    salaire DECIMAL(10,2),
+    date_publication TIMESTAMP DEFAULT NOW(),
+    photo VARCHAR(255),
+    avantages TEXT,
+    competences TEXT,
+    conditions_particulieres TEXT,
+    date_modification TIMESTAMP DEFAULT NOW(),
+    disponibilite VARCHAR(100),
+    duree_contrat VARCHAR(100),
+    experience_requise VARCHAR(100),
+    horaires VARCHAR(100),
+    qualites TEXT,
+    type_contrat VARCHAR(50) DEFAULT 'temps_plein',
+    niveau_etude VARCHAR(100)
+);

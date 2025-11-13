@@ -1,0 +1,141 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "color": {
+    "primary": {
+      "50": { "value": "#EBF1FB", "type": "color" },
+      "100": { "value": "#D7E3F7", "type": "color" },
+      "500": { "value": "#4169E1", "type": "color", "description": "Bleu royal - Confiance" },
+      "600": { "value": "#2952CC", "type": "color" },
+      "700": { "value": "#1E3D99", "type": "color" },
+      "900": { "value": "#0F1F4D", "type": "color" }
+    },
+    "gold": {
+      "50": { "value": "#FBF6E8", "type": "color" },
+      "100": { "value": "#F7EDCC", "type": "color" },
+      "500": { "value": "#E1B941", "type": "color", "description": "Doré - Chaleur & proximité" },
+      "600": { "value": "#C9A12E", "type": "color" },
+      "700": { "value": "#A8851F", "type": "color" },
+      "900": { "value": "#6B5412", "type": "color" }
+    },
+    "neutral": {
+      "50": { "value": "#FAFAF8", "type": "color", "description": "Blanc chaud ivoire + grain texture" },
+      "100": { "value": "#F5F4F0", "type": "color", "description": "Crème surfaces élevées" },
+      "200": { "value": "#E8E6E0", "type": "color" },
+      "500": { "value": "#9B9A94", "type": "color" },
+      "700": { "value": "#4A4A45", "type": "color" },
+      "900": { "value": "#1C1C19", "type": "color" }
+    },
+    "semantic": {
+      "success": { "value": "#2D6A4F", "type": "color" },
+      "warning": { "value": "#E1B941", "type": "color" },
+      "error": { "value": "#A62C2B", "type": "color" },
+      "info": { "value": "#4169E1", "type": "color" }
+    },
+    "background": {
+      "page": { "value": "#FAFAF8", "type": "color", "description": "Fond global avec texture grain SVG 2%" },
+      "elevated": { "value": "#F5F4F0", "type": "color" },
+      "overlay": { "value": "rgba(28, 28, 25, 0.6)", "type": "color" }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "serif": { "value": "'Playfair Display', Georgia, serif", "type": "fontFamily" },
+      "sans": { "value": "'Lato', -apple-system, BlinkMacSystemFont, sans-serif", "type": "fontFamily" }
+    },
+    "fontSize": {
+      "display-xl": { "value": "96px", "type": "dimension" },
+      "display-lg": { "value": "72px", "type": "dimension" },
+      "headline-xl": { "value": "64px", "type": "dimension" },
+      "headline-lg": { "value": "48px", "type": "dimension" },
+      "headline-md": { "value": "40px", "type": "dimension" },
+      "body-xl": { "value": "24px", "type": "dimension" },
+      "body-lg": { "value": "20px", "type": "dimension" },
+      "body-md": { "value": "18px", "type": "dimension" },
+      "body-sm": { "value": "16px", "type": "dimension" },
+      "caption": { "value": "14px", "type": "dimension" },
+      "caption-xs": { "value": "12px", "type": "dimension" }
+    },
+    "fontWeight": {
+      "light": { "value": "300", "type": "number" },
+      "regular": { "value": "400", "type": "number" },
+      "medium": { "value": "500", "type": "number" },
+      "semibold": { "value": "600", "type": "number" },
+      "bold": { "value": "700", "type": "number" }
+    },
+    "lineHeight": {
+      "tight": { "value": "1.1", "type": "number" },
+      "snug": { "value": "1.2", "type": "number" },
+      "normal": { "value": "1.3", "type": "number" },
+      "relaxed": { "value": "1.6", "type": "number" },
+      "loose": { "value": "1.7", "type": "number" }
+    },
+    "letterSpacing": {
+      "tight": { "value": "-0.01em", "type": "dimension" },
+      "normal": { "value": "0", "type": "dimension" },
+      "wide": { "value": "0.02em", "type": "dimension" },
+      "wider": { "value": "0.05em", "type": "dimension" }
+    }
+  },
+  "spacing": {
+    "1": { "value": "8px", "type": "dimension" },
+    "2": { "value": "16px", "type": "dimension" },
+    "3": { "value": "24px", "type": "dimension" },
+    "4": { "value": "32px", "type": "dimension" },
+    "6": { "value": "48px", "type": "dimension" },
+    "8": { "value": "64px", "type": "dimension" },
+    "12": { "value": "96px", "type": "dimension" },
+    "16": { "value": "128px", "type": "dimension" },
+    "20": { "value": "160px", "type": "dimension" }
+  },
+  "borderRadius": {
+    "sm": { "value": "8px", "type": "dimension" },
+    "md": { "value": "12px", "type": "dimension" },
+    "lg": { "value": "16px", "type": "dimension" },
+    "xl": { "value": "24px", "type": "dimension" },
+    "full": { "value": "9999px", "type": "dimension" }
+  },
+  "boxShadow": {
+    "card": { 
+      "value": "0 4px 12px rgba(28, 28, 25, 0.08), 0 2px 4px rgba(28, 28, 25, 0.04)", 
+      "type": "shadow" 
+    },
+    "card-hover": { 
+      "value": "0 12px 24px rgba(28, 28, 25, 0.12), 0 6px 12px rgba(28, 28, 25, 0.06)", 
+      "type": "shadow" 
+    },
+    "modal": { 
+      "value": "0 24px 48px rgba(28, 28, 25, 0.15), 0 12px 24px rgba(28, 28, 25, 0.08)", 
+      "type": "shadow" 
+    },
+    "nav": { 
+      "value": "0 2px 8px rgba(28, 28, 25, 0.06)", 
+      "type": "shadow" 
+    }
+  },
+  "animation": {
+    "duration": {
+      "fast": { "value": "300ms", "type": "duration" },
+      "base": { "value": "400ms", "type": "duration" },
+      "slow": { "value": "500ms", "type": "duration" },
+      "luxury": { "value": "600ms", "type": "duration" }
+    },
+    "easing": {
+      "elegant": { "value": "cubic-bezier(0.25, 0.46, 0.45, 0.94)", "type": "cubicBezier" },
+      "standard": { "value": "ease-out", "type": "cubicBezier" }
+    }
+  },
+  "gradient": {
+    "gold-metallic": {
+      "value": "linear-gradient(135deg, #E1B941 0%, #F7EDCC 50%, #C9A12E 100%)",
+      "type": "gradient",
+      "description": "UNIQUEMENT pour CTAs primaires - max 2 par viewport"
+    }
+  },
+  "texture": {
+    "grain": {
+      "value": "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4wMiIvPjwvc3ZnPg==')",
+      "type": "other",
+      "description": "Texture grain 2% opacity - appliquer sur bg-page"
+    }
+  }
+}

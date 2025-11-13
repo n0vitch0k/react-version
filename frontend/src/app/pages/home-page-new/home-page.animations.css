@@ -1,0 +1,701 @@
+/* ============================================
+   ANIMATIONS AVANCÉES ET MICRO-INTERACTIONS
+   ============================================ */
+
+/* ============================================
+   SCROLL ANIMATIONS - INTERSECTION OBSERVER
+   ============================================ */
+
+/* Fade In On Scroll */
+[data-animate="fade-in"] {
+  opacity: 0;
+  animation: fadeInOnScroll 0.8s ease-out forwards;
+}
+
+/* Slide Up On Scroll */
+[data-animate="slide-up"] {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: slideUpOnScroll 0.8s ease-out forwards;
+}
+
+/* Slide In From Left */
+[data-animate="slide-left"] {
+  opacity: 0;
+  transform: translateX(-40px);
+  animation: slideInLeftOnScroll 0.8s ease-out forwards;
+}
+
+/* Slide In From Right */
+[data-animate="slide-right"] {
+  opacity: 0;
+  transform: translateX(40px);
+  animation: slideInRightOnScroll 0.8s ease-out forwards;
+}
+
+/* Scale In On Scroll */
+[data-animate="scale"] {
+  opacity: 0;
+  transform: scale(0.9);
+  animation: scaleInOnScroll 0.8s ease-out forwards;
+}
+
+/* ============================================
+   KEYFRAMES - SCROLL ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInOnScroll {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpOnScroll {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeftOnScroll {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRightOnScroll {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleInOnScroll {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   HOVER ANIMATIONS - BUTTONS
+   ============================================ */
+
+/* Button Lift Effect */
+.btn {
+  position: relative;
+  z-index: 1;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  border-radius: inherit;
+  opacity: 0;
+  z-index: -1;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn.hover::after,
+.btn:hover::after {
+  transform: scaleY(1);
+  opacity: 0.5;
+}
+
+/* Button Glow Effect */
+.btn-primary {
+  box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+}
+
+.btn-primary.hover,
+.btn-primary:hover {
+  animation: buttonGlow 0.6s ease-out;
+}
+
+@keyframes buttonGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+/* ============================================
+   HOVER ANIMATIONS - CARDS
+   ============================================ */
+
+/* Service Card Advanced Hover */
+.service-card {
+  position: relative;
+}
+
+.service-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(212, 175, 55, 0.1) 50%, transparent 100%);
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: none;
+  pointer-events: none;
+  border-radius: var(--radius-xl);
+}
+
+.service-card.hover::after,
+.service-card:hover::after {
+  animation: shimmer 0.6s ease-in-out;
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* Card Border Glow */
+.service-card.hover,
+.service-card:hover {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), var(--shadow-xl);
+}
+
+/* ============================================
+   HOVER ANIMATIONS - COMMITMENT CARDS
+   ============================================ */
+
+.commitment-card {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.commitment-card.hover,
+.commitment-card:hover {
+  transform: translateY(-8px) rotateX(2deg);
+}
+
+/* ============================================
+   HOVER ANIMATIONS - CONTACT ITEMS
+   ============================================ */
+
+.contact-item {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.contact-item.hover,
+.contact-item:hover {
+  transform: translateX(8px);
+  border-color: var(--color-gold);
+  box-shadow: -4px 0 15px rgba(212, 175, 55, 0.2), var(--shadow-md);
+}
+
+.item-icon {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.contact-item.hover .item-icon,
+.contact-item:hover .item-icon {
+  transform: scale(1.15) rotate(5deg);
+  color: var(--color-gold);
+}
+
+/* ============================================
+   FORM INTERACTIONS
+   ============================================ */
+
+/* Input Focus Animation */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  position: relative;
+  background-color: var(--color-white);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(107, 114, 128, 0.5);
+  transition: color 0.3s ease-out;
+}
+
+.form-group input:focus::placeholder,
+.form-group textarea:focus::placeholder {
+  color: rgba(107, 114, 128, 0.3);
+}
+
+/* Input Label Animation */
+.form-group label {
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease-out;
+}
+
+.form-group input:focus ~ label,
+.form-group textarea:focus ~ label {
+  color: var(--color-blue-light);
+}
+
+/* Input Underline Animation */
+.form-group input::after,
+.form-group textarea::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-gold) 0%, var(--color-blue-light) 100%);
+  transition: width 0.3s ease-out;
+}
+
+.form-group input:focus::after,
+.form-group textarea:focus::after {
+  width: 100%;
+}
+
+/* ============================================
+   LOADING SPINNER ANIMATION
+   ============================================ */
+
+.loading-spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse Animation for Loading */
+.btn-loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ============================================
+   SUCCESS MESSAGE ANIMATION
+   ============================================ */
+
+.success-message {
+  animation: slideUpFade 0.4s ease-out, successPulse 0.6s ease-out 0.4s;
+}
+
+@keyframes successPulse {
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.success-icon {
+  animation: successIconBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+@keyframes successIconBounce {
+  0% {
+    transform: scale(0) rotate(-45deg);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* ============================================
+   SCROLL INDICATOR ANIMATION
+   ============================================ */
+
+.scroll-indicator {
+  animation: floatBounce 2s ease-in-out infinite;
+}
+
+@keyframes floatBounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-15px);
+  }
+}
+
+.scroll-arrow {
+  animation: arrowBounce 1.5s ease-in-out infinite;
+}
+
+@keyframes arrowBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+/* ============================================
+   HERO GRADIENT ANIMATIONS
+   ============================================ */
+
+.hero-gradient-1 {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.hero-gradient-2 {
+  animation: floatSlow 10s ease-in-out infinite reverse;
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-30px) translateX(10px);
+  }
+  50% {
+    transform: translateY(-60px) translateX(0);
+  }
+  75% {
+    transform: translateY(-30px) translateX(-10px);
+  }
+}
+
+/* ============================================
+   SERVICE CARD ICON ANIMATION
+   ============================================ */
+
+.service-icon {
+  display: inline-block;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.service-card.hover .service-icon,
+.service-card:hover .service-icon {
+  transform: scale(1.2) rotate(5deg);
+  filter: drop-shadow(0 8px 12px rgba(212, 175, 55, 0.3));
+}
+
+/* ============================================
+   COMMITMENT ICON ANIMATION
+   ============================================ */
+
+.commitment-icon {
+  display: inline-block;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.commitment-card.hover .commitment-icon,
+.commitment-card:hover .commitment-icon {
+  transform: scale(1.25) rotate(-10deg);
+  animation: iconFloat 0.6s ease-in-out;
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: scale(1.25) rotate(-10deg) translateY(0);
+  }
+  50% {
+    transform: scale(1.25) rotate(-10deg) translateY(-8px);
+  }
+}
+
+/* ============================================
+   VIDEO CONTAINER ANIMATION
+   ============================================ */
+
+.video-container {
+  position: relative;
+}
+
+.video-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, transparent 100%);
+  opacity: 0;
+  border-radius: var(--radius-xl);
+  pointer-events: none;
+  transition: opacity 0.4s ease-out;
+  z-index: 1;
+}
+
+.video-container.hover::before,
+.video-container:hover::before {
+  animation: videoOverlay 0.6s ease-out;
+}
+
+@keyframes videoOverlay {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   LINK ARROW ANIMATION
+   ============================================ */
+
+.link-arrow {
+  display: inline-block;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.service-card.hover .link-arrow,
+.service-card:hover .link-arrow {
+  animation: arrowSlide 0.6s ease-out;
+}
+
+@keyframes arrowSlide {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(8px);
+  }
+  100% {
+    transform: translateX(5px);
+  }
+}
+
+/* ============================================
+   SECTION HEADER ANIMATION
+   ============================================ */
+
+.section-header {
+  animation: headerFadeIn 0.8s ease-out;
+}
+
+@keyframes headerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   STAGGERED ANIMATIONS FOR GRIDS
+   ============================================ */
+
+.services-grid > * {
+  animation: gridItemFadeIn 0.6s ease-out backwards;
+}
+
+.services-grid > *:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.services-grid > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.services-grid > *:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes gridItemFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.commitment-cards > * {
+  animation: commitmentItemFadeIn 0.6s ease-out backwards;
+}
+
+.commitment-cards > *:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.commitment-cards > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.commitment-cards > *:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes commitmentItemFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================
+   SMOOTH PAGE TRANSITIONS
+   ============================================ */
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+:host {
+  animation: pageEnter 0.4s ease-out;
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* GPU Acceleration for smooth animations */
+.btn,
+.service-card,
+.commitment-card,
+.contact-item,
+.video-container,
+.scroll-indicator {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   DARK MODE SUPPORT (FUTURE)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  /* Animations remain the same, colors handled by component */
+}
+
+/* ============================================
+   HIGH CONTRAST MODE SUPPORT
+   ============================================ */
+
+@media (prefers-contrast: more) {
+  .btn,
+  .service-card,
+  .commitment-card,
+  .contact-item {
+    border-width: 2px;
+  }
+
+  .title-accent {
+    height: 6px;
+  }
+}
+
+/* Ajouter ces animations à la fin du fichier */
+
+/* Video Play Button Animation */
+.play-button {
+  animation: playButtonPulse 2s ease-in-out infinite;
+}
+
+@keyframes playButtonPulse {
+  0%, 100% {
+    box-shadow: var(--shadow-xl);
+  }
+  50% {
+    box-shadow: var(--shadow-xl), 0 0 0 10px rgba(59, 130, 246, 0.1);
+  }
+}
+
+/* Video Container Hover Effect */
+.video-featured-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.video-featured-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 50%, rgba(59, 130, 246, 0.1) 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.video-featured-container.hover::after,
+.video-featured-container:hover::after {
+  opacity: 1;
+}

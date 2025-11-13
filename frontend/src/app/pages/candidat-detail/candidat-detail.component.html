@@ -1,0 +1,217 @@
+<div class="detail-container">
+  <!-- Loading State Premium -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Chargement du profil en cours...</p>
+  </div>
+
+  <!-- Error State Humain -->
+  <div *ngIf="error && !loading" class="error-state">
+    <i class="fas fa-exclamation-triangle"></i>
+    <h3>Oups ! Une erreur est survenue</h3>
+    <p>{{ error }}</p>
+    <button class="back-btn" [routerLink]="['/personnel']">
+      <i class="fas fa-arrow-left"></i>
+      Retour aux candidats
+    </button>
+  </div>
+
+  <!-- Candidat Detail Premium -->
+  <div *ngIf="candidat && !loading" class="candidat-detail">
+    <!-- Header avec navigation premium -->
+    <div class="detail-header">
+      <button class="back-btn" [routerLink]="['/personnel']">
+        <i class="fas fa-arrow-left"></i>
+        Retour aux candidats
+      </button>
+      <div class="header-actions">
+        <button class="action-btn share-btn" (click)="partager()">
+          <i class="fas fa-share-alt"></i>
+          Partager ce profil
+        </button>
+        <button class="action-btn favorite-btn">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Redesigné -->
+    <div class="detail-content">
+      <!-- Hero Section Premium -->
+      <div class="candidat-hero">
+        <div class="hero-content">
+          <div class="avatar-section">
+            <div class="avatar-container">
+              <img 
+                *ngIf="getPhoto(candidat)" 
+                [src]="getPhoto(candidat)" 
+                alt="{{ candidat.prenom }} {{ candidat.nom }}"
+                class="candidat-avatar">
+              <div class="avatar-overlay">
+                <div class="availability-dot" [class.available]="candidat.disponible"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="candidat-info">
+            <div class="hero-badge">
+              <span class="badge poste">{{ candidat.poste_recherche }}</span>
+              <span class="badge experience">{{ candidat.annees_experience }} ans d'expérience</span>
+            </div>
+            
+            <h1 class="candidat-name">{{ candidat.prenom }} {{ candidat.nom }}</h1>
+            <p class="candidat-age">{{ candidat.age }} ans</p>
+            
+            <div class="candidat-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Dakar, Sénégal</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Profil {{ formatRelativeDate(candidat.date_publication) }}</span>
+              </div>
+              <div class="meta-item" *ngIf="candidat.ethnie">
+                <i class="fas fa-users"></i>
+                <span>{{ candidat.ethnie }}</span>
+              </div>
+              <div class="meta-item" *ngIf="candidat.religion">
+                <i class="fas fa-pray"></i>
+                <span>{{ candidat.religion }}</span>
+              </div>
+            </div>
+
+            <div class="salary-section">
+              <div class="salary-amount">
+                {{ formatPrice(candidat.salaire_souhaite) }} <span class="currency">FCFA</span>
+              </div>
+              <div class="salary-period">salaire mensuel souhaité</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Grid Redesigné -->
+      <div class="content-grid">
+        <!-- Main Column -->
+        <div class="main-column">
+          <!-- Experience Section Premium -->
+          <section class="content-section">
+            <h2 class="section-title">
+              <i class="fas fa-briefcase"></i>
+              Parcours Professionnel
+            </h2>
+            <div class="experience-content">
+              <p>{{ candidat.experience || 'Ce candidat prépare actuellement la description détaillée de son expérience professionnelle.' }}</p>
+            </div>
+          </section>
+
+          <!-- Competences Section Élégante -->
+          <section class="content-section" *ngIf="candidat.competences && candidat.competences.length > 0">
+            <h2 class="section-title">
+              <i class="fas fa-list-check"></i>
+              Compétences Clés
+            </h2>
+            <div class="competences-grid">
+              <div class="competence-item" *ngFor="let competence of candidat.competences">
+                {{ competence }}
+              </div>
+            </div>
+          </section>
+
+          <!-- Informations Personnelles Humaines -->
+          <section class="content-section">
+            <h2 class="section-title">
+              <i class="fas fa-user"></i>
+              Informations Personnelles
+            </h2>
+            <div class="info-grid">
+              <div class="info-item">
+                <strong>Situation matrimoniale</strong>
+                <span>{{ candidat.situation_matrimoniale || 'Non spécifié' }}</span>
+              </div>
+              <div class="info-item">
+                <strong>Email professionnel</strong>
+                <span>{{ candidat.email }}</span>
+              </div>
+              <div class="info-item" *ngIf="candidat.maladies">
+                <strong>Informations santé</strong>
+                <span>{{ candidat.maladies }}</span>
+              </div>
+              <div class="info-item">
+                <strong>Disponibilité</strong>
+                <span [class.available]="candidat.disponible" class="status-dot">
+                  {{ candidat.disponible ? 'Disponible immédiatement' : 'Non disponible actuellement' }}
+                </span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Sidebar Premium -->
+        <div class="sidebar">
+          <!-- CTA Card Élégante -->
+          <div class="cta-card">
+            <div class="cta-header">
+              <h3>Intéressé par ce talent ?</h3>
+              <p>Contactez {{ candidat.prenom }} dès maintenant pour discuter de votre projet</p>
+            </div>
+            <button class="cta-button primary" (click)="contacter()">
+              <i class="fas fa-envelope"></i>
+              Contacter {{ candidat.prenom }}
+            </button>
+            <button class="cta-button secondary">
+              <i class="fas fa-file-pdf"></i>
+              Télécharger le CV
+            </button>
+          </div>
+
+          <!-- Stats Card Design -->
+          <div class="stats-card">
+            <h4>Fiabilité du Profil</h4>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-value">{{ candidat.annees_experience }}</div>
+                <div class="stat-label">Ans d'expérience</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">95%</div>
+                <div class="stat-label">Taux de réponse</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">24h</div>
+                <div class="stat-label">Délai moyen</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Candidats Premium -->
+    <section class="related-section" *ngIf="relatedCandidats.length > 0">
+      <div class="section-header">
+        <h2>Talents Similaires</h2>
+        <p>Découvrez d'autres profils exceptionnels qui pourraient vous intéresser</p>
+      </div>
+      <div class="related-grid">
+        <div *ngFor="let related of relatedCandidats" 
+             class="related-card"
+             [routerLink]="['/personnel/candidat', related.id]">
+          <div class="related-avatar">
+            <img *ngIf="getPhoto(related)" [src]="getPhoto(related)" alt="Avatar">
+          </div>
+          <h4>{{ related.prenom }} {{ related.nom }}</h4>
+          <div class="related-meta">
+            <span class="poste">{{ related.poste_recherche }}</span>
+            <span class="experience">{{ related.annees_experience }} ans exp.</span>
+          </div>
+          <p class="related-desc">{{ related.experience | truncate:60 }}</p>
+          <div class="related-salary">
+            {{ formatPrice(related.salaire_souhaite) }} FCFA
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

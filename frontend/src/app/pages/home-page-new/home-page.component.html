@@ -1,0 +1,312 @@
+<!-- SECTION HERO -->
+<section class="hero" id="hero">
+  <div class="hero-background">
+    <div class="hero-gradient-1"></div>
+    <div class="hero-gradient-2"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-text-wrapper">
+      <h1 class="hero-title">
+        <span class="title-word">Trouvez le bon job ou le bon employé</span>
+      </h1>
+
+      <p class="hero-description">
+        Chez Christ-Roi Agence, on vous aide à trouver votre place dans le monde du travail à Abidjan. 
+        Des opportunités réelles, un accompagnement personnalisé.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#services" class="btn btn-primary" (mouseenter)="heroBtnHover($event)" (mouseleave)="heroBtnLeave($event)">
+          <span class="btn-text">Je cherche un emploi</span>
+          <span class="btn-icon">→</span>
+        </a>
+        <a href="#services" class="btn btn-secondary" (mouseenter)="heroBtnHover($event)" (mouseleave)="heroBtnLeave($event)">
+          <span class="btn-text">Je cherche un employé</span>
+          <span class="btn-icon">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator" (click)="scrollToNext()">
+    <span class="scroll-text">Comment ça marche ?</span>
+    <div class="scroll-arrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION SERVICES -->
+<section class="services-section" id="services">
+  <div class="section-container">
+    <div class="section-header" data-animate="fade-in">
+      <h2 class="section-title">On vous aide concrètement</h2>
+      <p class="section-subtitle">Que vous soyez à la recherche d'un travail ou d'un employé, nous trouvons la solution qui vous convient</p>
+      <div class="title-accent"></div>
+    </div>
+
+    <div class="services-grid" data-animate="fade-in">
+      <!-- Carte pour les candidats -->
+      <div class="service-card" data-animate="slide-up" 
+           (mouseenter)="servicesCardHover($event)"
+           (mouseleave)="servicesCardLeave($event)"
+           (click)="navigateToCandidats()">
+        <div class="card-header">
+          <div class="service-icon">👤</div>
+          <div class="service-accent"></div>
+        </div>
+        <div class="card-content">
+          <h3 class="service-title">Je cherche un emploi</h3>
+          <p class="service-description">
+            Chauffeur, vigile, nounou, femme de ménage , etc ... On vous aide à trouver le job qui correspond à vos besoins.
+          </p>
+          <div class="service-link">
+            <span>Voir les offres disponibles</span>
+            <span class="link-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carte pour les recruteurs -->
+      <div class="service-card" data-animate="slide-up"
+           (mouseenter)="servicesCardHover($event)"
+           (mouseleave)="servicesCardLeave($event)"
+           (click)="navigateToRecruteurs()">
+        <div class="card-header">
+          <div class="service-icon">🏢</div>
+          <div class="service-accent"></div>
+        </div>
+        <div class="card-content">
+          <h3 class="service-title">Je cherche un employé</h3>
+          <p class="service-description">
+            Besoin d'un chauffeur de confiance, d'une nounou sérieuse ou d'un vigile compétent ? On vous présente les bonnes personnes.
+          </p>
+          <div class="service-link">
+            <span>Trouver le bon profil</span>
+            <span class="link-arrow">→</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-container">
+    <div class="section-header" data-animate="fade-in">
+      <h2 class="section-title">Notre façon de travailler</h2>
+      <div class="title-accent"></div>
+    </div>
+
+    <div class="about-intro" data-animate="slide-up">
+      <p>
+        À Abidjan, on sait que trouver un bon emploi ou un bon employé n'est pas simple.
+        On avance avec simplicité et sérieux, sans détour : le but, c'est que tout le monde y gagne, vraiment.
+      </p>
+    </div>
+
+    <div class="about-video-section">
+      <!-- Video Container -->
+      <div class="video-featured-container" 
+           (mouseenter)="aboutVideoHover($event)"
+           (mouseleave)="aboutVideoLeave($event)">
+        <div class="video-wrapper">
+          <video #founderVideo 
+                 class="founder-video" 
+                 poster="assets/videos/poster.jpg" 
+                 muted
+                 (loadedmetadata)="onVideoLoaded($event)">
+            <source src="assets/videos/fondatrice-explication.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+          </video>
+          <div class="video-overlay" (click)="toggleVideoPlayback()">
+            <div class="play-button" *ngIf="!isVideoPlaying">
+              <div class="play-icon">▶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scrolling Message with Arrows -->
+      <div class="scrolling-message-container" (click)="scrollToContact()">
+        <div class="scrolling-message">
+          <div class="message-content">
+            <span class="message-text">📞 Appelez-nous au +225 05 03 97 47 75</span>
+            <span class="message-separator">•</span>
+            <span class="message-text">✉️ Ou envoyez-nous un message directement</span>
+            <span class="message-separator">•</span>
+            <span class="message-text">🚀 Trouvons ensemble la solution qui vous convient</span>
+            <span class="message-separator">•</span>
+            <span class="message-text">💼 Des opportunités réelles pour tous</span>
+          </div>
+          
+          <!-- Flèches intégrées au message -->
+          <div class="inline-arrows">
+            <div class="arrow-down"></div>
+            <div class="arrow-down"></div>
+            <div class="arrow-down"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-container">
+    <div class="section-header" data-animate="fade-in">
+      <h2 class="section-title">Parlons-en directement</h2>
+      <p class="section-subtitle">Venez nous voir à l'agence ou envoyez-nous un message</p>
+      <div class="title-accent"></div>
+    </div>
+
+    <div class="contact-wrapper">
+      <!-- Informations de contact -->
+      <div class="contact-info-section">
+        <div class="info-header">
+          <h3>On vous écoute</h3>
+          <p>Une question ? Un projet ? On discute autour d'un café à notre agence.</p>
+        </div>
+
+        <div class="contact-items">
+          <div class="contact-item" 
+               *ngFor="let item of contactItems"
+               (mouseenter)="contactItemHover($event)"
+               (mouseleave)="contactItemLeave($event)">
+            <div class="item-icon">{{ item.icon }}</div>
+            <div class="item-content">
+              <h4>{{ item.title }}</h4>
+              <p>{{ item.value }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="confidence-badge">
+          <span class="badge-icon">💬</span>
+          <p>On vous répond simplement et rapidement, sans jargon compliqué</p>
+        </div>
+      </div>
+
+      <!-- Formulaire de contact -->
+      <div class="contact-form-section">
+        <div class="form-header">
+          <h3>Envoyez-nous un message</h3>
+          <p>On vous recontacte pour fixer un rendez-vous à l'agence</p>
+        </div>
+
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">Prénom *</label>
+              <input 
+                type="text" 
+                id="firstName" 
+                formControlName="firstName"
+                placeholder="Votre prénom"
+                [class.error]="contactForm.get('firstName')?.invalid && contactForm.get('firstName')?.touched"
+              >
+              <div class="error-message" *ngIf="contactForm.get('firstName')?.invalid && contactForm.get('firstName')?.touched">
+                Le prénom est requis
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="lastName">Nom *</label>
+              <input 
+                type="text" 
+                id="lastName" 
+                formControlName="lastName"
+                placeholder="Votre nom"
+                [class.error]="contactForm.get('lastName')?.invalid && contactForm.get('lastName')?.touched"
+              >
+              <div class="error-message" *ngIf="contactForm.get('lastName')?.invalid && contactForm.get('lastName')?.touched">
+                Le nom est requis
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input 
+                type="email" 
+                id="email" 
+                formControlName="email"
+                placeholder="votre@email.com"
+                [class.error]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+              >
+              <div class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                <span *ngIf="contactForm.get('email')?.errors?.['required']">L'email est requis</span>
+                <span *ngIf="contactForm.get('email')?.errors?.['email']">Format d'email invalide</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Téléphone *</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                formControlName="phone"
+                placeholder="+225 00 00 00 00"
+                [class.error]="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched"
+              >
+              <div class="error-message" *ngIf="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched">
+                Le téléphone est requis
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="service">Vous êtes *</label>
+            <select id="service" formControlName="service" required>
+              <option value="">Choisissez une option</option>
+              <option value="candidat">Je cherche un emploi</option>
+              <option value="recruteur">Je cherche un candidat</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea 
+              id="message" 
+              formControlName="message" 
+              rows="5"
+              placeholder="Dites-nous ce que vous cherchez (métier, disponibilités, besoins...)"
+              [class.error]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"
+            ></textarea>
+            <div class="error-message" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+              Le message est requis
+            </div>
+          </div>
+
+          <button 
+            type="submit" 
+            class="submit-btn"
+            [disabled]="contactForm.invalid || isSubmitting"
+            [class.loading]="isSubmitting"
+            (mouseenter)="contactSubmitHover($event)"
+            (mouseleave)="contactSubmitLeave($event)">
+            <span class="btn-text" *ngIf="!isSubmitting">Envoyer mon message</span>
+            <div class="btn-loading" *ngIf="isSubmitting">
+              <div class="loading-spinner"></div>
+              <span>Envoi en cours...</span>
+            </div>
+          </button>
+        </form>
+
+        <div class="success-message" *ngIf="showSuccessMessage">
+          <div class="success-icon">✓</div>
+          <div class="success-content">
+            <h4>Message envoyé !</h4>
+            <p>On vous contacte très vite pour prendre rendez-vous.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

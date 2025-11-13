@@ -1,0 +1,382 @@
+<div class="offre-detail-premium">
+  <!-- Hero Section avec Bleu Royal -->
+  <section class="premium-hero" [style.background]="heroGradient">
+    <div class="hero-background">
+      <div class="hero-gradient hero-gradient-1"></div>
+      <div class="hero-gradient hero-gradient-2"></div>
+      <div class="hero-pattern"></div>
+    </div>
+    
+    <div class="container">
+      <!-- Navigation -->
+      <nav class="premium-breadcrumb">
+        <a routerLink="/personnel" class="breadcrumb-link" [queryParams]="{view: 'offres'}">
+          <i class="fas fa-arrow-left"></i>
+          <span>Retour aux offres</span>
+        </a>
+        <div class="breadcrumb-actions">
+          <button class="action-btn share-btn" (click)="partager()" title="Partager cette offre" aria-label="Partager cette offre">
+            <i class="fas fa-share-alt"></i>
+          </button>
+          <button class="action-btn favorite-btn" title="Sauvegarder cette offre" aria-label="Sauvegarder cette offre">
+            <i class="far fa-bookmark"></i>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Hero Content -->
+      <div class="hero-content">
+        <!-- Badges -->
+        <div class="hero-badges">
+          <div class="badge-group">
+            <span class="badge primary" *ngIf="typeContrat">
+              <i class="fas fa-file-contract"></i>
+              {{ typeContrat }}
+            </span>
+            <span class="badge accent" *ngIf="experienceRequise">
+              <i class="fas fa-chart-line"></i>
+              {{ experienceRequise }}
+            </span>
+            <span class="badge success" *ngIf="isUrgent(offre)">
+              <i class="fas fa-bolt"></i>
+              Offre urgente
+            </span>
+          </div>
+        </div>
+
+        <!-- Titre et Métadonnées -->
+        <div class="hero-main">
+          <h1 class="hero-title">{{ titre }}</h1>
+          
+          <div class="hero-meta">
+            <div class="meta-item">
+              <div class="meta-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="meta-content">
+                <span class="meta-label">Lieu</span>
+                <span class="meta-value">{{ lieu }}</span>
+              </div>
+            </div>
+            
+            <div class="meta-item">
+              <div class="meta-icon">
+                <i class="fas fa-money-bill-wave"></i>
+              </div>
+              <div class="meta-content">
+                <span class="meta-label">Salaire</span>
+                <span class="meta-value salary">{{ formatPrice(salaire) }} FCFA</span>
+              </div>
+            </div>
+            
+            <div class="meta-item">
+              <div class="meta-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="meta-content">
+                <span class="meta-label">Publication</span>
+                <span class="meta-value">{{ formatRelativeDate(datePublication) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions Principales -->
+        <div class="hero-actions">
+          <button class="btn-primary btn-large" (click)="postuler()">
+            <i class="fas fa-paper-plane"></i>
+            <span>Postuler maintenant</span>
+          </button>
+          <button class="btn-secondary btn-large" (click)="partager()">
+            <i class="fas fa-share-alt"></i>
+            <span>Partager l'offre</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenu Principal -->
+  <main class="premium-content">
+    <div class="container">
+      <div class="content-grid">
+        <!-- Colonne Principale -->
+        <div class="main-column">
+          <!-- Description -->
+          <section class="content-card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-heart"></i>
+              </div>
+              <h2 class="card-title">En quoi consiste ce travail ?</h2>
+            </div>
+            <div class="card-content">
+              <p class="description-text">{{ description }}</p>
+            </div>
+          </section>
+
+          <!-- Compétences -->
+          <section class="content-card" *ngIf="offre?.competences">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-hands-helping"></i>
+              </div>
+              <h2 class="card-title">Vos atouts pour ce poste</h2>
+            </div>
+            <div class="card-content">
+              <div class="skills-grid">
+                <span class="skill-tag" *ngFor="let competence of getCompetencesList()">
+                  <i class="fas fa-check"></i>
+                  {{ competence }}
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Qualités -->
+          <section class="content-card" *ngIf="offre?.qualites">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <h2 class="card-title">Votre personnalité idéale</h2>
+            </div>
+            <div class="card-content">
+              <ul class="qualities-list">
+                <li *ngFor="let qualite of getQualitesList()">
+                  <i class="fas fa-check-circle"></i>
+                  <span>{{ qualite }}</span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Expérience -->
+          <section class="content-card" *ngIf="experienceRequise">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <h2 class="card-title">Votre parcours souhaité</h2>
+            </div>
+            <div class="card-content">
+              <div class="experience-content">
+                <p>{{ experienceRequise }}</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Conditions particulières -->
+          <section class="content-card" *ngIf="conditionsParticulieres">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <h2 class="card-title">Points importants à savoir</h2>
+            </div>
+            <div class="card-content">
+              <div class="conditions-content">
+                <p>{{ conditionsParticulieres }}</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar-column">
+          <!-- Informations du poste -->
+          <div class="sidebar-card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <h3 class="card-title">Les détails pratiques</h3>
+            </div>
+            <div class="card-content">
+              <div class="info-list">
+                <div class="info-item" *ngIf="typeContrat">
+                  <div class="info-icon">
+                    <i class="fas fa-file-contract"></i>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Type de contrat</span>
+                    <span class="info-value">{{ typeContrat }}</span>
+                  </div>
+                </div>
+
+                <div class="info-item" *ngIf="horaires">
+                  <div class="info-icon">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Horaires de travail</span>
+                    <span class="info-value">{{ horaires }}</span>
+                  </div>
+                </div>
+
+                <div class="info-item" *ngIf="dureeContrat">
+                  <div class="info-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Durée du contrat</span>
+                    <span class="info-value">{{ dureeContrat }}</span>
+                  </div>
+                </div>
+
+                <div class="info-item" *ngIf="disponibilite">
+                  <div class="info-icon">
+                    <i class="fas fa-user-check"></i>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Disponibilité</span>
+                    <span class="info-value">{{ disponibilite }}</span>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Lieu de travail</span>
+                    <span class="info-value">{{ lieu }}</span>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Rémunération</span>
+                    <span class="info-value salary">{{ formatPrice(salaire) }} FCFA</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Avantages -->
+          <div class="sidebar-card" *ngIf="offre?.avantages">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-gift"></i>
+              </div>
+              <h3 class="card-title">Ce qu'on vous offre</h3>
+            </div>
+            <div class="card-content">
+              <div class="advantages-list">
+                <div class="advantage-item" *ngFor="let avantage of getAvantagesList()">
+                  <i class="fas fa-check-circle"></i>
+                  <span>{{ avantage }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Photo -->
+          <div class="sidebar-card" *ngIf="photo">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-camera"></i>
+              </div>
+              <h3 class="card-title">Votre futur environnement</h3>
+            </div>
+            <div class="card-content">
+              <div class="photo-container">
+                <img [src]="getPhotoUrl(photo)" [alt]="titre" class="offre-photo" loading="lazy">
+              </div>
+            </div>
+          </div>
+
+          <!-- Historique -->
+          <div class="sidebar-card">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-history"></i>
+              </div>
+              <h3 class="card-title">Historique de l'offre</h3>
+            </div>
+            <div class="card-content">
+              <div class="info-list">
+                <div class="info-item">
+                  <div class="info-icon">
+                    <i class="fas fa-calendar-plus"></i>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Date de publication</span>
+                    <span class="info-value">{{ formatDate(datePublication) }}</span>
+                  </div>
+                </div>
+
+                <div class="info-item" *ngIf="dateModification">
+                  <div class="info-icon">
+                    <i class="fas fa-sync-alt"></i>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Dernière mise à jour</span>
+                    <span class="info-value">{{ formatDate(dateModification) }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Call to Action -->
+  <section class="premium-cta">
+    <div class="cta-background">
+      <div class="cta-gradient"></div>
+    </div>
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Prêt à rejoindre notre équipe ?</h2>
+        <p class="cta-description">
+          Ne laissez pas passer cette opportunité. Postulez maintenant et commencez votre nouvelle aventure professionnelle.
+        </p>
+        <div class="cta-actions">
+          <button class="btn-primary btn-cta" (click)="postuler()">
+            <i class="fas fa-paper-plane"></i>
+            <span>Postuler maintenant</span>
+          </button>
+          <button class="btn-secondary btn-cta" (click)="partager()">
+            <i class="fas fa-share-alt"></i>
+            <span>Partager à un proche</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- États de chargement -->
+<div *ngIf="loading" class="premium-loading">
+  <div class="loading-container">
+    <div class="loading-spinner"></div>
+    <div class="loading-content">
+      <h3>Préparation de l'offre</h3>
+      <p>Nous chargeons les détails de cette opportunité passionnante...</p>
+    </div>
+  </div>
+</div>
+
+<!-- États d'erreur -->
+<div *ngIf="error && !loading" class="premium-error">
+  <div class="error-container">
+    <div class="error-icon">
+      <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    <div class="error-content">
+      <h3>Offre non disponible</h3>
+      <p>{{ error }}</p>
+      <button class="btn-primary" (click)="retourListe()">
+        <i class="fas fa-arrow-left"></i>
+        <span>Découvrir nos autres offres</span>
+      </button>
+    </div>
+  </div>
+</div>

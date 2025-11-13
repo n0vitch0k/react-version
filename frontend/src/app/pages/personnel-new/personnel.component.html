@@ -1,0 +1,601 @@
+<div class="personnel-container">
+  <!-- ===== HERO SECTION ===== -->
+  <section class="personnel-hero" id="hero">
+    <div class="hero-background">
+      <div class="hero-gradient-1"></div>
+      <div class="hero-gradient-2"></div>
+      <div class="hero-image-overlay">
+        <img src="https://newsdeeply-app.s3.amazonaws.com/20180129115203/658364187GI252_wiego.jpg" 
+     alt="Personnel africain au travail - Agence de placement" 
+     class="hero-image">
+
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-text-wrapper">
+        <h1 class="hero-title">
+          <span class="title-word">Trouvez le job parfait ou le candidat idéal</span>
+        </h1>
+
+        <p class="hero-description">
+          À Abidjan, on connecte simplement les chercheurs d'emploi et les recruteurs. 
+          Pas de jargon compliqué, juste des solutions qui marchent.
+        </p>
+
+        <div class="hero-stats">
+          <div class="stat-item" data-animate="fade-in">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Personnes placées</div>
+          </div>
+          <div class="stat-item" data-animate="fade-in">
+            <div class="stat-number">95%</div>
+            <div class="stat-label">De satisfaction</div>
+          </div>
+          <div class="stat-item" data-animate="fade-in">
+            <div class="stat-number">24h</div>
+            <div class="stat-label">Réponse moyenne</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NAVIGATION TABS ===== -->
+  <section class="personnel-nav-section" id="tabs">
+    <div class="section-container">
+      <div class="nav-tabs-wrapper">
+        <div class="nav-tabs">
+          <button 
+            [class.active]="activeTab === 'offres'"
+            (click)="setActiveTab('offres')"
+            class="nav-tab nav-tab-primary"
+            data-hover-target
+            [attr.aria-label]="'Je cherche un emploi - ' + totalOffres + ' offres'">
+            <div class="tab-icon">💼</div>
+            <div class="tab-content">
+              <span class="tab-label">Je cherche un emploi</span>
+              <span class="tab-count">{{ totalOffres }} offres</span>
+            </div>
+          </button>
+
+          <button 
+            [class.active]="activeTab === 'candidats'"
+            (click)="setActiveTab('candidats')"
+            class="nav-tab nav-tab-secondary"
+            data-hover-target
+            [attr.aria-label]="'Je cherche un candidat - ' + totalCandidats + ' profils'">
+            <div class="tab-icon">👥</div>
+            <div class="tab-content">
+              <span class="tab-label">Je cherche un candidat</span>
+              <span class="tab-count">{{ totalCandidats }} profils</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="personnel-main">
+    
+    <!-- OFFRES D'EMPLOI -->
+    <section *ngIf="activeTab === 'offres'" class="content-section" data-animate="fade-in">
+      <div class="section-container">
+        
+        <!-- Filtres Avancés -->
+        <div class="filters-card">
+          <div class="filters-header">
+            <h3>Affinez votre recherche</h3>
+            <button class="clear-filters-btn" (click)="clearOffresFilters()" *ngIf="hasOffresFilters">
+              <span>Effacer les filtres</span>
+            </button>
+          </div>
+
+          <div class="filters-grid">
+            <!-- Recherche -->
+            <div class="filter-group full-width">
+              <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input 
+                  type="text" 
+                  placeholder="Rechercher un métier, un lieu..."
+                  [(ngModel)]="offresFilters.search"
+                  (keyup.enter)="searchOffres()"
+                  (blur)="searchOffres()"
+                  [attr.aria-label]="'Rechercher des offres demploi'">
+              </div>
+            </div>
+
+            <!-- Filtres ligne 1 -->
+            <div class="filter-group">
+              <label for="lieu-select">Localisation</label>
+              <select id="lieu-select" [(ngModel)]="offresFilters.lieu" (change)="searchOffres()">
+                <option value="">Partout à Abidjan</option>
+                <option *ngFor="let location of locations" [value]="location">
+                  {{ location }}
+                </option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="salaire-min">Salaire minimum</label>
+              <input 
+                id="salaire-min"
+                type="number" 
+                placeholder="Montant min"
+                [(ngModel)]="offresFilters.salaire_min"
+                (change)="searchOffres()"
+                min="0">
+            </div>
+
+            <div class="filter-group">
+              <label for="salaire-max">Salaire maximum</label>
+              <input 
+                id="salaire-max"
+                type="number" 
+                placeholder="Montant max"
+                [(ngModel)]="offresFilters.salaire_max"
+                (change)="searchOffres()"
+                min="0">
+            </div>
+
+            <!-- Filtres ligne 2 -->
+            <div class="filter-group">
+              <label for="type-contrat">Type de contrat</label>
+              <select id="type-contrat" [(ngModel)]="offresFilters.type_contrat" (change)="searchOffres()">
+                <option value="">Tous les contrats</option>
+                <option value="Temps plein">Temps plein</option>
+                <option value="Temps partiel">Temps partiel</option>
+                <option value="Journalier">Journalier</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="metier-select">poste proposé</label>
+              <select id="metier-select" [(ngModel)]="offresFilters.metier" (change)="searchOffres()">
+                <option value="">Tous les métiers</option>
+                <option *ngFor="let metier of metiersActifs" [value]="metier">{{ metier }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Résultats -->
+        <div class="results-section">
+          
+          <!-- État Chargement -->
+          <div *ngIf="loadingOffres" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>On cherche les meilleures offres pour vous...</p>
+          </div>
+
+          <!-- État Erreur -->
+          <div *ngIf="errorOffres" class="error-state">
+            <div class="error-icon">⚠️</div>
+            <h4>Une erreur s'est produite</h4>
+            <p>{{ errorOffres }}</p>
+            <button class="retry-btn" (click)="loadOffres()">Réessayer</button>
+          </div>
+
+          <!-- État Vide -->
+          <div *ngIf="!loadingOffres && !errorOffres && offres.length === 0" class="empty-state">
+            <div class="empty-icon">📭</div>
+            <h4>Aucune offre trouvée</h4>
+            <p>Essayez de modifier vos critères de recherche</p>
+            <button class="action-btn" (click)="clearOffresFilters()">
+              Voir toutes les offres
+            </button>
+          </div>
+
+          <!-- Grille des Offres -->
+          <div *ngIf="!loadingOffres && offres.length > 0" class="offres-grid">
+            <article 
+              *ngFor="let offre of offres; let i = index"
+              class="offre-card"
+              data-hover-target
+              (click)="navigateToOffreDetail(offre.id)"
+              role="button"
+              tabindex="0"
+              (keyup.enter)="navigateToOffreDetail(offre.id)"
+              [attr.aria-label]="'Voir les détails de loffre ' + offre.titre">
+              
+              <div class="card-image">
+                <img [src]="'https://images.unsplash.com/photo-' + (1552664730 + i) + '?w=400&h=250&fit=crop'" 
+                     [alt]="'Image pour loffre ' + offre.titre"
+                     class="image-placeholder">
+              </div>
+
+              <div class="card-badge">
+                <span class="badge-text">{{ formatRelativeDate(offre.date_publication) }}</span>
+              </div>
+
+              <div class="card-content">
+                <h3 class="card-title">{{ offre.titre }}</h3>
+                
+                <div class="card-meta">
+                  <div class="meta-item">
+                    <span class="meta-icon">📍</span>
+                    {{ offre.lieu || 'Abidjan' }}
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-icon">⏰</span>
+                    {{ offre.type_contrat || 'Temps plein' }}
+                  </div>
+                </div>
+
+                <p class="card-description">{{ offre.description | truncate:100 }}</p>
+
+                <div class="card-features">
+                  <span class="feature-tag" *ngIf="offre.experience_requise">
+                    {{ offre.experience_requise }}
+                  </span>
+                  <span class="feature-tag" *ngIf="offre.horaires">
+                    {{ offre.horaires }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <div class="salary">
+                  <span class="salary-amount">{{ formatPrice(offre.salaire) }}</span>
+                  <span class="salary-currency">FCFA</span>
+                </div>
+                <button class="card-cta" [attr.aria-label]="'Voir les détails de loffre ' + offre.titre">
+                  Voir l'offre
+                  <span class="cta-arrow">→</span>
+                </button>
+              </div>
+            </article>
+          </div>
+
+          <!-- Pagination -->
+          <div *ngIf="!loadingOffres && offres.length > 0" class="pagination-section">
+            <!-- Votre pagination existante -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CANDIDATS -->
+    <section *ngIf="activeTab === 'candidats'" class="content-section" data-animate="fade-in">
+      <div class="section-container">
+        
+        <!-- Filtres Candidats -->
+        <div class="filters-card">
+          <div class="filters-header">
+            <h3>Recherchez le talent idéal</h3>
+            <button class="clear-filters-btn" (click)="clearCandidatsFilters()" *ngIf="hasCandidatsFilters">
+              <span>Effacer les filtres</span>
+            </button>
+          </div>
+
+          <div class="filters-grid">
+            <!-- Recherche -->
+            <div class="filter-group full-width">
+              <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input 
+                  type="text" 
+                  placeholder="Rechercher un métier, une compétence..."
+                  [(ngModel)]="candidatsFilters.search"
+                  (keyup.enter)="searchCandidats()"
+                  (blur)="searchCandidats()"
+                  [attr.aria-label]="'Rechercher des candidats'">
+              </div>
+            </div>
+
+            <!-- Filtres candidats -->
+            <div class="filter-group">
+              <label for="poste-recherche">Métier recherché</label>
+              <select id="poste-recherche" [(ngModel)]="candidatsFilters.poste_recherche" (change)="searchCandidats()">
+                <option value="">Tous les métiers</option>
+                <option *ngFor="let poste of postesRechercheActifs" [value]="poste">{{ poste }}</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="age-min">Âge minimum</label>
+              <input 
+                id="age-min"
+                type="number" 
+                placeholder="Âge min"
+                [ngModel]="candidatsFilters.age_min ?? ''"
+                (ngModelChange)="candidatsFilters.age_min = parseNumber($event)"
+                (change)="searchCandidats()"
+                min="18" 
+                max="65">
+            </div>
+
+            <div class="filter-group">
+              <label for="age-max">Âge maximum</label>
+              <input 
+                id="age-max"
+                type="number" 
+                placeholder="Âge max"
+                [ngModel]="candidatsFilters.age_max ?? ''"
+                (ngModelChange)="candidatsFilters.age_max = parseNumber($event)"
+                (change)="searchCandidats()"
+                min="18" 
+                max="65">
+            </div>
+
+            <!-- Filtres ligne 2 -->
+            <div class="filter-group">
+              <label for="salaire-min-candidat">Salaire souhaité (min)</label>
+              <input 
+                id="salaire-min-candidat"
+                type="number" 
+                placeholder="Montant min"
+                [ngModel]="candidatsFilters.salaire_min ?? ''"
+                (ngModelChange)="candidatsFilters.salaire_min = parseNumber($event)"
+                (change)="searchCandidats()"
+                min="0">
+            </div>
+
+            <div class="filter-group">
+              <label for="salaire-max-candidat">Salaire souhaité (max)</label>
+              <input 
+                id="salaire-max-candidat"
+                type="number" 
+                placeholder="Montant max"
+                [ngModel]="candidatsFilters.salaire_max ?? ''"
+                (ngModelChange)="candidatsFilters.salaire_max = parseNumber($event)"
+                (change)="searchCandidats()"
+                min="0">
+            </div>
+
+            <!-- Filtres ligne 3 -->
+            <div class="filter-group">
+              <label for="ethnie">Ethnie</label>
+              <select id="ethnie" [(ngModel)]="candidatsFilters.ethnie" (change)="searchCandidats()">
+                <option value="">Toutes les ethnies</option>
+                <option *ngFor="let ethnie of ethniesActives" [value]="ethnie">{{ ethnie }}</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="religion">Religion</label>
+              <select id="religion" [(ngModel)]="candidatsFilters.religion" (change)="searchCandidats()">
+                <option value="">Toutes les religions</option>
+                <option *ngFor="let religion of religionsActives" [value]="religion">{{ religion }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Résultats Candidats -->
+        <div class="results-section">
+          
+          <!-- États similaires aux offres -->
+          <div *ngIf="loadingCandidats" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>On recherche les meilleurs profils...</p>
+          </div>
+
+          <div *ngIf="errorCandidats" class="error-state">
+            <div class="error-icon">⚠️</div>
+            <h4>Une erreur s'est produite</h4>
+            <p>{{ errorCandidats }}</p>
+            <button class="retry-btn" (click)="loadCandidats()">Réessayer</button>
+          </div>
+
+          <div *ngIf="!loadingCandidats && !errorCandidats && candidats.length === 0" class="empty-state">
+            <div class="empty-icon">👤</div>
+            <h4>Aucun candidat trouvé</h4>
+            <p>Essayez d'élargir vos critères de recherche</p>
+            <button class="action-btn" (click)="clearCandidatsFilters()">
+              Voir tous les candidats
+            </button>
+          </div>
+
+          <!-- Grille des Candidats -->
+          <div *ngIf="!loadingCandidats && candidats.length > 0" class="candidats-grid">
+            <article 
+              *ngFor="let candidat of candidats; let i = index"
+              class="candidat-card"
+              data-hover-target
+              (click)="navigateToCandidatDetail(candidat.id)"
+              role="button"
+              tabindex="0"
+              (keyup.enter)="navigateToCandidatDetail(candidat.id)"
+              [attr.aria-label]="'Voir le profil de ' + candidat.prenom + ' ' + candidat.nom">
+              
+              <div class="card-avatar">
+                <div class="avatar-img">
+                  <img *ngIf="getPhoto(candidat)" [src]="getPhoto(candidat)" [alt]="'Photo de ' + candidat.prenom">
+                  <img *ngIf="!getPhoto(candidat)" [src]="'https://images.unsplash.com/photo-' + (1507003957 + i) + '?w=200&h=200&fit=crop'" [alt]="'Photo de profil de ' + candidat.prenom">
+                </div>
+                <div class="availability-dot" [class.available]="candidat.disponible"></div>
+              </div>
+
+              <div class="card-content">
+                <div class="card-header">
+                  <h3 class="card-title">{{ candidat.prenom }} {{ candidat.nom }}</h3>
+                  <span class="card-age">{{ candidat.age }} ans</span>
+                </div>
+
+                <div class="card-badge">
+                  {{ candidat.poste_recherche }}
+                </div>
+
+                <div class="card-meta">
+                  <div class="meta-item">
+                    <span class="meta-icon">💼</span>
+                    {{ candidat.annees_experience || 0 }} an(s) d'exp.
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-icon">💰</span>
+                    {{ formatPrice(candidat.salaire_souhaite) }} FCFA
+                  </div>
+                </div>
+
+                <p class="card-description">
+                  {{ candidat.experience || 'Expérience diversifiée' | truncate:80 }}
+                </p>
+
+                <div class="card-skills">
+                  <span *ngFor="let skill of candidat.competences?.slice(0, 3)" class="skill-tag">
+                    {{ skill }}
+                  </span>
+                  <span *ngIf="(candidat.competences?.length || 0) > 3" class="skill-more">
+                    +{{ (candidat.competences?.length || 0) - 3 }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <div class="availability" [class.available]="candidat.disponible">
+                  {{ candidat.disponible ? 'Disponible maintenant' : 'En poste' }}
+                </div>
+                <button class="card-cta" [attr.aria-label]="'Voir le profil de ' + candidat.prenom">
+                  Voir le profil
+                  <span class="cta-arrow">→</span>
+                </button>
+              </div>
+            </article>
+          </div>
+
+          <!-- Pagination -->
+          <div *ngIf="!loadingCandidats && candidats.length > 0" class="pagination-section">
+            <!-- Votre pagination existante -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+
+  <!-- ===== SECTION FAQ & CONTACT ===== -->
+  <section class="faq-contact-section" id="contact">
+    <!-- Effet de fond décoratif -->
+    <div class="faq-contact-background">
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+      </div>
+    </div>
+
+    <div class="section-container">
+      <!-- En-tête principal -->
+      <div class="section-header-modern" data-animate="fade-in-up">
+        <div class="header-accent">
+          <span class="accent-line"></span>
+          <span class="accent-icon">💡</span>
+          <span class="accent-line"></span>
+        </div>
+        <h2 class="section-title-modern">Une question ? Des besoins ?</h2>
+        <p class="section-subtitle-modern">On est là pour vous accompagner dans votre projet professionnel</p>
+      </div>
+
+      <!-- Contenu principal -->
+      <div class="faq-contact-content">
+        <!-- FAQ Section -->
+        <div class="faq-section" data-animate="slide-left">
+          <div class="faq-header">
+            <h3 class="faq-title">
+              <span class="faq-icon">🤔</span>
+              Questions fréquentes
+            </h3>
+          </div>
+          
+          <div class="faq-list">
+            <div class="faq-item" data-faq-item>
+              <div class="faq-question">
+                <span class="question-text">Comment fonctionne le placement ?</span>
+                <div class="faq-toggle">+</div>
+              </div>
+              <div class="faq-answer">
+                <p>Nous évaluons vos besoins et vous connectons avec les profils qui correspondent parfaitement à vos critères.</p>
+              </div>
+            </div>
+
+            <div class="faq-item" data-faq-item>
+              <div class="faq-question">
+                <span class="question-text">Combien de temps pour trouver un emploi ?</span>
+                <div class="faq-toggle">+</div>
+              </div>
+              <div class="faq-answer">
+                <p>En moyenne, nos candidats trouvent un emploi sous 72 heures. Tout dépend du poste et de votre profil.</p>
+              </div>
+            </div>
+
+            <div class="faq-item" data-faq-item>
+              <div class="faq-question">
+                <span class="question-text">Quels sont vos tarifs ?</span>
+                <div class="faq-toggle">+</div>
+              </div>
+              <div class="faq-answer">
+                <p>Nos services sont totalement gratuits pour les chercheurs d'emploi. Contactez-nous pour en savoir plus.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Cards -->
+        <div class="contact-cards" data-animate="slide-right">
+          <div class="contact-cards-grid">
+            <div class="contact-card" data-hover-target>
+              <div class="card-header">
+                <div class="contact-icon-modern">📞</div>
+                <div class="card-badge">Urgent</div>
+              </div>
+              <div class="card-body">
+                <h4>Appelez-nous</h4>
+                <p class="contact-value">+225 05 03 97 47 75</p>
+                <p class="contact-detail">Lun-Ven 8h-18h</p>
+              </div>
+              <div class="card-hover-bg"></div>
+            </div>
+
+            <div class="contact-card" data-hover-target>
+              <div class="card-header">
+                <div class="contact-icon-modern">✉️</div>
+                <div class="card-badge">Rapide</div>
+              </div>
+              <div class="card-body">
+                <h4>Écrivez-nous</h4>
+                <p class="contact-value">christroiagence&#64;gmail.com</p>
+                <p class="contact-detail">Réponse sous 24h</p>
+              </div>
+              <div class="card-hover-bg"></div>
+            </div>
+
+            <div class="contact-card" data-hover-target>
+              <div class="card-header">
+                <div class="contact-icon-modern">📍</div>
+                <div class="card-badge">Agence</div>
+              </div>
+              <div class="card-body">
+                <h4>Visitez-nous</h4>
+                <p class="contact-value">Abidjan, Côte d'Ivoire</p>
+                <p class="contact-detail">Du lundi au vendredi</p>
+              </div>
+              <div class="card-hover-bg"></div>
+            </div>
+          </div>
+
+          <!-- Call to Action Principal -->
+          <div class="main-cta" data-animate="fade-in">
+            <div class="cta-content">
+              <div class="cta-icon">🚀</div>
+              <h3>Prêt à commencer ?</h3>
+              <p>Que vous soyez employeur ou demandeur d'emploi, nos experts vous guident vers le succès.</p>
+              <div class="cta-actions">
+                <button class="cta-primary" (click)="navigateToContact()" [attr.aria-label]="'Commencer votre recherche'">
+                  Commencer maintenant
+                  <span class="cta-arrow">→</span>
+                </button>
+                <button class="cta-secondary" (click)="setActiveTab('offres')" [attr.aria-label]="'Voir les offres d\'emploi'">
+                  Voir les offres
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
